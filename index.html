@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <link rel="icon" type="image/ico" href="globe.ico">
+  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="materialize.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <title>Map It Out!</title>
+</head>
+
+<body id="background">
+  <!-- NAVIGATION BAR CONTAINER -->
+  <nav hidden>
+    <div class="nav-wrapper grey">
+      <div class="brand-logo center">Map It Out!</div>
+      <ul class="left">
+        <li><a id="about" class="waves-effect blue btn">About</a></li>
+        <li><a id="contact" class="waves-effect blue btn">Contact</a></li>
+      </ul>
+      <ul class="right">
+        <li><a id="new-search" class="waves-effect blue btn">New Search</a></li>
+        <li><a onclick="history.go(0)" class="waves-effect blue btn">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- LOGIN CONTAINER -->
+  <div id="login-div" class="valign-wrapper row login-box">
+    <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+      <form id="login-form">
+        <div class="card-content">
+          <span id="login-title" class="card-title center">Please login to search maps</span>
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">account_circle</i>
+              <label for="name">Name </label>
+              <input type="text" class="validate" name="name" id="name" />
+            </div>
+            <div class="input-field col s12">
+              <i class="material-icons prefix">email</i>
+              <label for="password">Email </label>
+              <input type="email" class="validate" name="email" id="email" />
+            </div>
+            <div class="input-field col s12">
+              <i class="material-icons prefix">lock</i>
+              <label for="password">Password </label>
+              <input type="password" class="validate" name="password" id="password" />
+            </div>
+          </div>
+        </div>
+        <div class="card-action right-align">
+          <input id="reset" type="reset" class="btn-flat grey-text waves-effect">
+          <input id="login-submit" type="submit" class="waves-effect blue btn" value="Login">
+        </div>
+      </form>
+    </div>
+  </div>
+
+<!-- CONTACT CONTAINER -->
+  <div class="row" hidden>
+    <div class="col m4 s1">
+    </div>
+    <div id="contact-box" class="col card hoverable m4 s10" hidden>
+      <div class="card-content">
+        <span id="contact-title" class="card-title center">Contact</span>
+        <i class="fas fa-user"></i>
+        <span id="contact-name" class="center">Torrey Smith</span><br><br>
+        <i class="fas fa-envelope"></i>
+        <a id="contact-email" class="center" href="mailto:torreypsmith@gmail.com">torreypsmith@gmail.com</a><br><br>
+        <i class="fab fa-github"></i>
+        <a id="contact-github" class="center" href="https://github.com/TheRealTorreySmith">https://github.com/TheRealTorreySmith</a><br><br>
+        <i class="fab fa-linkedin"></i>
+        <a id="contact-linkedin" class="center" href="https://www.linkedin.com/in/therealtorreysmith/">https://www.linkedin.com/in/therealtorreysmith/</a><br><br>
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                <label for="textarea1">Comments</label>
+              </div>
+            </div>
+          </form>
+          <div id="submit-btn-row" class="row">
+            <a id="submit-btn" type="submit" class="waves-effect blue btn right">Submit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- SEARCH MAPS CONTAINER -->
+  <div id="search-box" class="row" hidden>
+    <div class="col m4 s1">
+    </div>
+    <div class="col card hoverable m4 s10">
+      <div class="card-content">
+        <span id="search-maps-title" class="card-title center"></span>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="search-value" type="text" name="search" placeholder="Search.."/>
+          </div>
+        </div>
+
+        <!-- CHECKBOXES -->
+        <div id="check-row-1" class="left">
+          <input type="checkbox" id="test1" />
+          <label for="test1">Current Location Panoramic</label><br>
+          <input type="checkbox" id="test2" />
+          <label for="test2">Current Location Satellite</label><br>
+          <input type="checkbox" id="test3" />
+          <label for="test3">Current Location Overview</label><br>
+        </div>
+        <div class="col m1 s1">
+        </div>
+        <div id="check-row-2" class="left">
+          <input type="checkbox" id="test4" />
+          <label for="test4">Destination Panoramic</label><br>
+          <input type="checkbox" id="test5" />
+          <label for="test5">Destination Satellite</label><br>
+          <input type="checkbox" id="test6" />
+          <label for="test6">Destination Overview</label><br>
+        </div>
+        <!-- MAP SEARCH BUTTON -->
+        <div id="searchbtn-row" class="row">
+          <a id="search-terms" type="submit" class="waves-effect blue btn">Search</a>
+        </div>
+
+      </div>
+    </div>
+      <div class="col m4 s1">
+      </div>
+  </div>
+
+</body>
+
+</html>
