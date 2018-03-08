@@ -33,6 +33,7 @@ function newSearchClick() {
   $('#submitted-comment').hide();
 }
 
+//CLICK EVENT HANDLER FOR WHEN LOGIN FORM IS SUBMITTED
 function loginSubmit() {
   localStorage.setItem('Name', JSON.stringify($('input[type="text"]').val()));
   localStorage.setItem('Email', JSON.stringify($('input[type="email"]').val()));
@@ -89,9 +90,6 @@ $(document).ready(function () {
     for (let i = 1; i <= number; i++) {
       const iframe = $('<iframe src="" width="430" height="430" allowfullscreen/>').attr("id", [i]).appendTo($('body'));
     }
-
-    const searchValue = $('#search-value').val();
-    const coords = localStorage.getItem('Coordinates');
 
     //GEOCODE API THAT RETURNS LONGITUTDE AND LATITUDE
     const xhr = $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU`);
