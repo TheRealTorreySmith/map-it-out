@@ -1,4 +1,53 @@
+function contactFunc() {
+  $('iframe').remove();
+  $('#search-box').hide();
+  $('#contact-box').show();
+}
+
+function contactClick() {
+  $('iframe').remove();
+  $('#search-box').hide();
+  $('#contact-box').show();
+}
+
+function commentSubmit() {
+  $('#contact-box').hide();
+  $('#submitted-comment').show();
+}
+
+function hideMobileBtn() {
+  $('#mobile-btn').hide();
+}
+
+function mobileSearch() {
+  $('iframe').remove();
+  $('#search-box').show();
+  $('#contact-box').hide();
+  $('#submitted-comment').hide();
+}
+
+function newSearchClick() {
+  $('iframe').remove();
+  $('#search-box').show();
+  $('#contact-box').hide();
+  $('#submitted-comment').hide();
+}
+
+function loginSubmit() {
+  localStorage.setItem('Name', JSON.stringify($('input[type="text"]').val()));
+  localStorage.setItem('Email', JSON.stringify($('input[type="email"]').val()));
+  $('#search-maps-title')[0].innerText = "Welcome, " + $('input[type="text"]').val();
+  $('#login-div').remove();
+  $('#topnav').show();
+  $('nav').show();
+  $('.row').show();
+  $('#submitted-comment').hide();
+  $('#mobile-btn').show();
+}
+
 $(document).ready(function () {
+
+  hideMobileBtn();
 
   //GETS THE USERS CURRENT LOCATION IN LONGITUDE AND LATITUDE
   //IF IT'S NOT ALREADY IN LOCAL STORAGE
@@ -9,67 +58,20 @@ $(document).ready(function () {
     });
   }
 
-  //HIDES THE MENU BUTTON ON THE LOGIN SCREEN
-  $('#mobile-btn').hide();
-
   //CLICK EVENT HANDLER FOR WHEN LOGIN FORM IS SUBMITTED
-  $("#login-form").on("submit", function(e) {
-    e.preventDefault();
-    localStorage.setItem('Name', JSON.stringify($('input[type="text"]').val()));
-    localStorage.setItem('Email', JSON.stringify($('input[type="email"]').val()));
-    $('#search-maps-title')[0].innerText = "Welcome, " + $('input[type="text"]').val();
-    $('#login-div').remove();
-    $('#topnav').show();
-    $('nav').show();
-    $('.row').show();
-    $('#submitted-comment').hide();
-    $('#mobile-btn').show();
-  });
-
-  //CLICK EVENT HANDLER FOR CONTACT INFO.
-  $("#contact").click(function() {
-    $('iframe').remove();
-    $('#search-box').hide();
-    $('#contact-box').show();
-  });
-
-  //CLICK EVENT HANDLER FOR COMMENT SUBMIT BUTTON
-  $("#submit-btn").click(function() {
-    $('#contact-box').hide();
-    $('#submitted-comment').show();
-  });
-
-  //CLICK EVENT HANDLER FOR SAVE BUTTON
-  $("#about").click(function() {
-    $('#search-box').hide();
-  });
-
+  $("#login-form").on("submit", loginSubmit);
   //CLICK EVENT HANDLER FOR A NEW SEARCH
-  $("#new-search").click(function(e) {
-    e.preventDefault();
-    $('iframe').remove();
-    $('#search-box').show();
-    $('#contact-box').hide();
-    $('#submitted-comment').hide();
-  });
-
+  $("#new-search").on("click", newSearchClick);
   //MOBILE CLICK EVENT HANDLER FOR NEW SEARCH
-  $("#mobile-search").click(function(e) {
-    e.preventDefault();
-    $('iframe').remove();
-    $('#search-box').show();
-    $('#contact-box').hide();
-    $('#submitted-comment').hide();
-  });
-
+  $("#mobile-search").on("click", mobileSearch);
+  //CLICK EVENT HANDLER FOR CONTACT INFO.
+  $("#contact").on("click", contactFunc);
   //MOBILE CLICK EVENT HANDLER FOR CONTACT INFO.
-  $("#mobile-contact").click(function() {
-    $('iframe').remove();
-    $('#search-box').hide();
-    $('#contact-box').show();
-  });
+  $("#mobile-contact").on("click", contactClick);
+  //CLICK EVENT HANDLER FOR COMMENT SUBMIT BUTTON
+  $("#submit-btn").on("click", commentSubmit);
 
-  //CLICK EVENT HANDLER FOR NUMBER OF CHECKED BOXES
+  //CHANGE EVENT HANDLER FOR NUMBER OF CHECKED BOXES
   let number = 0;
   $('[type="checkbox"]').change(function() {
     if ($(event.target).is(':checked')) {
@@ -88,6 +90,9 @@ $(document).ready(function () {
       const iframe = $('<iframe src="" width="430" height="430" allowfullscreen/>').attr("id", [i]).appendTo($('body'));
     }
 
+    const searchValue = $('#search-value').val();
+    const coords = localStorage.getItem('Coordinates');
+
     //GEOCODE API THAT RETURNS LONGITUTDE AND LATITUDE
     const xhr = $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU`);
     xhr.done(function(Data){
@@ -96,24 +101,17 @@ $(document).ready(function () {
       const destCoords = lat + "," + long;
 
       //CURRENT LOCATION PANORAMIC
-      //USES CURRENT LONG AND LAT FOR CURRENT LOCATION
       $('#1').attr("src", `https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&location=${coords}&heading=210&pitch=10&fov=35`);
-
       //CURRENT LOCATION SATELLITE
       $('#2').attr("src", `https://www.google.com/maps/embed/v1/view?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&center=${coords}&zoom=18&maptype=satellite`);
-
       //CURRENT LOCATION OVERVIEW
       $('#3').attr("src", `https://www.google.com/maps/embed/v1/search?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&q=Boulder`);
-
       //DESTINATION PANORAMIC
       $('#4').attr("src", `https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&location=${destCoords}&heading=210&pitch=10&fov=35`);
-
       //DESTINATION SATELLITE
       $('#5').attr("src", `https://www.google.com/maps/embed/v1/view?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&center=${destCoords}&zoom=18&maptype=satellite`);
-
       //DESTINATION LOCATION OVERVIEW
       $('#6').attr("src", `https://www.google.com/maps/embed/v1/search?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&q=${searchValue}`);
-
       });
     });
 });

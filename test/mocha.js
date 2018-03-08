@@ -3965,6 +3965,7 @@ function Runnable (title, fn) {
   this._slow = 75;
   this._enableTimeouts = true;
   this.timedOut = false;
+  this._trace = new Error('done() called multiple times');
   this._retries = -1;
   this._currentRetry = 0;
   this.pending = false;
@@ -4189,13 +4190,7 @@ Runnable.prototype.run = function (fn) {
       return;
     }
     emitted = true;
-    var msg = 'done() called multiple times';
-    if (err && err.message) {
-      err.message += " (and Mocha's " + msg + ')';
-      self.emit('error', err);
-    } else {
-      self.emit('error', new Error(msg));
-    }
+    self.emit('error', err || new Error('done() called multiple times; stacktrace may be inaccurate'));
   }
 
   // finished
@@ -4204,9 +4199,8 @@ Runnable.prototype.run = function (fn) {
     if (self.timedOut) {
       return;
     }
-
     if (finished) {
-      return multiple(err);
+      return multiple(err || self._trace);
     }
 
     self.clearTimeout();
@@ -5127,6 +5121,11 @@ Runner.prototype.run = function (fn) {
   var self = this;
   var rootSuite = this.suite;
 
+  // If there is an `only` filter
+  if (hasOnly(rootSuite)) {
+    filterOnly(rootSuite);
+  }
+
   fn = fn || function () {};
 
   function uncaught (err) {
@@ -5134,10 +5133,6 @@ Runner.prototype.run = function (fn) {
   }
 
   function start () {
-    // If there is an `only` filter
-    if (hasOnly(rootSuite)) {
-      filterOnly(rootSuite);
-    }
     self.started = true;
     self.emit('start');
     self.runSuite(rootSuite, function () {
@@ -11415,18 +11410,18 @@ function mkdirP (p, opts, f, made) {
     else if (!opts || typeof opts !== 'object') {
         opts = { mode: opts };
     }
-
+    
     var mode = opts.mode;
     var xfs = opts.fs || fs;
-
+    
     if (mode === undefined) {
         mode = _0777 & (~process.umask());
     }
     if (!made) made = null;
-
+    
     var cb = f || function () {};
     p = path.resolve(p);
-
+    
     xfs.mkdir(p, mode, function (er) {
         if (!er) {
             made = made || p;
@@ -11459,10 +11454,10 @@ mkdirP.sync = function sync (p, opts, made) {
     if (!opts || typeof opts !== 'object') {
         opts = { mode: opts };
     }
-
+    
     var mode = opts.mode;
     var xfs = opts.fs || fs;
-
+    
     if (mode === undefined) {
         mode = _0777 & (~process.umask());
     }
