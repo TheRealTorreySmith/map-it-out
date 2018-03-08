@@ -9,6 +9,9 @@ $(document).ready(function () {
     });
   }
 
+  //HIDES THE MENU BUTTON ON THE LOGIN SCREEN
+  $('#mobile-btn').hide();
+
   //CLICK EVENT HANDLER FOR WHEN LOGIN FORM IS SUBMITTED
   $("#login-form").on("submit", function(e) {
     e.preventDefault();
@@ -20,6 +23,7 @@ $(document).ready(function () {
     $('nav').show();
     $('.row').show();
     $('#submitted-comment').hide();
+    $('#mobile-btn').show();
   });
 
   //CLICK EVENT HANDLER FOR CONTACT INFO.
@@ -47,6 +51,22 @@ $(document).ready(function () {
     $('#search-box').show();
     $('#contact-box').hide();
     $('#submitted-comment').hide();
+  });
+
+  //MOBILE CLICK EVENT HANDLER FOR NEW SEARCH
+  $("#mobile-search").click(function(e) {
+    e.preventDefault();
+    $('iframe').remove();
+    $('#search-box').show();
+    $('#contact-box').hide();
+    $('#submitted-comment').hide();
+  });
+
+  //MOBILE CLICK EVENT HANDLER FOR CONTACT INFO.
+  $("#mobile-contact").click(function() {
+    $('iframe').remove();
+    $('#search-box').hide();
+    $('#contact-box').show();
   });
 
   //CLICK EVENT HANDLER FOR NUMBER OF CHECKED BOXES

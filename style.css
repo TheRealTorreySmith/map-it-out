@@ -181,6 +181,16 @@ div#check-row-1 label, div#check-row-2 label {
   color: #2196f3;
 }
 
+#mobile-btn {
+  margin-bottom: 75px;
+  background-color: #2196f3 !important;
+}
+
+.dropdown-content li>a,
+.dropdown-content li>span {
+  color: #2196f3 !important;
+}
+
 /* MOBILE RESPONSIVENESS */
 @media (max-width: 400px) {
   iframe {
@@ -201,14 +211,17 @@ div#check-row-1 label, div#check-row-2 label {
   }
 }
 
+@media (min-width: 376px) {
+  #mobile-btn {display: none !important}
+}
+
 @media screen and (max-width: 600px) {
   #save, #contact, #new-search,
   #logout, #navwrap, nav#topnav {display: none;}
   nav#topnav {
     height: 0px;
-    margin-top: 100px;
+    /* margin-top: 100px; */
   }
-  #slide-nav {display: block;}
 }
 
 /* HOVERING LINKS BOUNCES ICONS */
