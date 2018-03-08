@@ -1,76 +1,99 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
-//GETS THE USERS CURRENT LOCATION IN LONGITUDE AND LATITUDE
-//IF IT'S NOT ALREADY IN LOCAL STORAGE
-if (localStorage.getItem("Coordinates") === null) {
-  navigator.geolocation.getCurrentPosition(function(position) {
-    const coords = [position.coords.latitude, position.coords.longitude];
-    localStorage.setItem('Coordinates', JSON.stringify(coords));
+  //GETS THE USERS CURRENT LOCATION IN LONGITUDE AND LATITUDE
+  //IF IT'S NOT ALREADY IN LOCAL STORAGE
+  if (localStorage.getItem("Coordinates") === null) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const coords = [position.coords.latitude, position.coords.longitude];
+      localStorage.setItem('Coordinates', coords.join(','));
+    });
+  }
+
+  //CLICK EVENT HANDLER FOR WHEN LOGIN FORM IS SUBMITTED
+  $("#login-form").on("submit", function(e) {
+    e.preventDefault();
+    localStorage.setItem('Name', JSON.stringify($('input[type="text"]').val()));
+    localStorage.setItem('Email', JSON.stringify($('input[type="email"]').val()));
+    $('#search-maps-title')[0].innerText = "Welcome, " + $('input[type="text"]').val();
+    $('#login-div').remove();
+    $('#topnav').show();
+    $('nav').show();
+    $('.row').show();
+    $('#submitted-comment').hide();
   });
-}
 
-//CLICK EVENT HANDLER FOR WHEN LOGIN FORM IS SUBMITTED
-$("#login-form").on("submit", function(e) {
-  e.preventDefault();
-  localStorage.setItem('Name', JSON.stringify($('#name').val()));
-  localStorage.setItem('Email', JSON.stringify($('#email').val()));
-  $('#search-maps-title')[0].innerText = "Welcome, " + $('#name').val();
-  $('#login-div').remove();
-  $('#topnav').show();
-  $('nav').show();
-  $('.row').show();
-});
+  //CLICK EVENT HANDLER FOR CONTACT INFO.
+  $("#contact").click(function() {
+    $('iframe').remove();
+    $('#search-box').hide();
+    $('#contact-box').show();
+  });
 
-//CLICK EVENT HANDLER FOR CONTACT INFO.
-$("#contact").click(function() {
-  $('#search-box').hide();
-  $('#contact-box').show();
-});
+  //CLICK EVENT HANDLER FOR COMMENT SUBMIT BUTTON
+  $("#submit-btn").click(function() {
+    $('#contact-box').hide();
+    $('#submitted-comment').show();
+  });
 
-//CLICK EVENT HANDLER FOR ABOUT THE SITE
-$("#about").click(function() {
-  $('#search-box').hide();
-});
+  //CLICK EVENT HANDLER FOR SAVE BUTTON
+  $("#about").click(function() {
+    $('#search-box').hide();
+  });
 
-//CLICK EVENT HANDLER FOR A NEW SEARCH
-$("#new-search").click(function(e) {
-  e.preventDefault();
-  $('iframe').remove();
-  $('#search-box').show();
-  $('#contact-box').hide();
-});
+  //CLICK EVENT HANDLER FOR A NEW SEARCH
+  $("#new-search").click(function(e) {
+    e.preventDefault();
+    $('iframe').remove();
+    $('#search-box').show();
+    $('#contact-box').hide();
+    $('#submitted-comment').hide();
+  });
 
-//TAKES THE SEARCH VALUE AND PUTS THE IFRAMES ON THE PAGE
-const searchValue = $('#search-value').val();
-$('#search-terms').on("click", function(){
-  $('#search-box').hide();
-  for (let i = 1; i <= 6; i++) {
-    const iframe = $('<iframe src="" width="430" height="430" allowfullscreen/>').attr("id",[i]).appendTo($('body'));
+  //CLICK EVENT HANDLER FOR NUMBER OF CHECKED BOXES
+  let number = 0;
+  $('[type="checkbox"]').change(function() {
+    if ($(event.target).is(':checked')) {
+      number += 1;
+    } else {
+      number -= 1;
+    }
+  });
+
+  //TAKES THE SEARCH VALUE AND PUTS THE IFRAMES ON THE PAGE
+  $('#search-terms').on("click", function() {
+    $('#search-box').hide();
+    const searchValue = $('#search-value').val();
+    const coords = localStorage.getItem('Coordinates');
+    for (let i = 1; i <= number; i++) {
+      const iframe = $('<iframe src="" width="430" height="430" allowfullscreen/>').attr("id", [i]).appendTo($('body'));
     }
 
-    //CURRENT STREET VIEW API CALL
-    //USES CURRENT LONG AND LAT FOR CURRENT LOCATION
-    //$('#1').attr("src", `https://www.google.com/maps/embed/v1/streetview?key=YOUR_API_KEY&location=${coords}&heading=210&pitch=10&fov=35`);
-
-    //FIRST IFRAME
-    //$('#2').attr("src", `https://www.google.com/maps/embed/v1/search?key=YOUR_API_KEY&q=${searchValue}`);
-    //const xhr = $.getJSON(`https://www.google.com/maps/embed/v1/search?key=YOUR_API_KEY&q=${searchValue}`);
-
     //GEOCODE API THAT RETURNS LONGITUTDE AND LATITUDE
-    //const xhr = $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=YOUR_API_KEY`);
+    const xhr = $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU`);
+    xhr.done(function(Data){
+      var lat = Data.results[0].geometry.location.lat;
+      var long = Data.results[0].geometry.location.lng;
+      const destCoords = lat + "," + long;
 
-    //DIRECTIONS MODE API
-    //$('#3').attr("src", `https://www.google.com/maps/embed/v1/directions?key=YOUR_API_KEY&origin=Boulder+Colorado&destination=Denver+Colorado&avoid=tolls|highways`);
+      //CURRENT LOCATION PANORAMIC
+      //USES CURRENT LONG AND LAT FOR CURRENT LOCATION
+      $('#1').attr("src", `https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&location=${coords}&heading=210&pitch=10&fov=35`);
 
-    //VIEW MODE API CALL
-    //$('#4').attr("src", `https://www.google.com/maps/embed/v1/directions?key=YOUR_API_KEY&origin=Denver&destination=${searchValue}&avoid=tolls|highways`);
-    //https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${coords}&zoom=18&maptype=satellite
+      //CURRENT LOCATION SATELLITE
+      $('#2').attr("src", `https://www.google.com/maps/embed/v1/view?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&center=${coords}&zoom=18&maptype=satellite`);
 
-     // xhr.done(function(Data){
-     //   var lat = Data.results[0].geometry.location.lat;
-     //   var long = Data.results[0].geometry.location.lng;
+      //CURRENT LOCATION OVERVIEW
+      $('#3').attr("src", `https://www.google.com/maps/embed/v1/search?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&q=Boulder`);
 
+      //DESTINATION PANORAMIC
+      $('#4').attr("src", `https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&location=${destCoords}&heading=210&pitch=10&fov=35`);
 
-    //});
-  });
+      //DESTINATION SATELLITE
+      $('#5').attr("src", `https://www.google.com/maps/embed/v1/view?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&center=${destCoords}&zoom=18&maptype=satellite`);
+
+      //DESTINATION LOCATION OVERVIEW
+      $('#6').attr("src", `https://www.google.com/maps/embed/v1/search?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&q=${searchValue}`);
+
+      });
+    });
 });

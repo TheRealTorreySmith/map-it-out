@@ -4,55 +4,68 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="materialize.min.css">
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <link rel="icon" type="image/ico" href="globe.ico">
   <script type="text/javascript" src="app.js"></script>
   <script type="text/javascript" src="materialize.min.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
   <title>Map It Out!</title>
 </head>
 
 <body id="background">
   <!-- NAVIGATION BAR CONTAINER -->
-  <nav hidden>
-    <div class="nav-wrapper grey">
-      <div class="brand-logo center">Map It Out!</div>
+  <nav id="topnav" hidden>
+    <div id="navwrap" class="nav-wrapper grey">
+
       <ul class="left">
-        <li><a id="about" class="waves-effect blue btn">About</a></li>
-        <li><a id="contact" class="waves-effect blue btn">Contact</a></li>
+        <li><a id="save" class="s6 m3 waves-effect blue btn">Save</a></li>
+        <li><a id="contact" class="s6 m3 waves-effect blue btn">Contact</a></li>
       </ul>
       <ul class="right">
-        <li><a id="new-search" class="waves-effect blue btn">New Search</a></li>
-        <li><a onclick="history.go(0)" class="waves-effect blue btn">Logout</a></li>
+        <li><a id="new-search" class="s6 m3 waves-effect blue btn">New Search</a></li>
+        <li><a id="logout" onclick="history.go(0)" class="s6 m3 waves-effect blue btn">Logout</a></li>
       </ul>
     </div>
   </nav>
 
+<!-- SLIDENAV MENU FOR MOBILE -->
+  <ul id="slide-out" class="side-nav">
+    <li><a class="waves-effect" href="#!">New Search</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="waves-effect" href="#!">Save</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="waves-effect" href="#!">Contact</a></li>
+  </ul>
+  <a href="#" data-activates="slide-out" class="button-collapse"></a>
+
   <!-- LOGIN CONTAINER -->
   <div id="login-div" class="valign-wrapper row login-box">
-    <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+    <div class="col card hoverable s11 m6 pull-m3 l4 pull-l4">
       <form id="login-form">
-        <div class="card-content">
-          <span id="login-title" class="card-title center">Please login to search maps</span>
+        <div id="login-container" class="card-content">
+          <span id="login-title" class="card-title center animated bounceIn">Please login to search maps</span>
           <div class="row">
             <div class="input-field col s12">
-              <i class="material-icons prefix">account_circle</i>
-              <label for="name">Name </label>
-              <input type="text" class="validate" name="name" id="name" />
+              <i class="material-icons prefix ">account_circle</i>
+              <label id="name" for="name">Name </label>
+              <input type="text" class="validate" name="name"/>
             </div>
             <div class="input-field col s12">
               <i class="material-icons prefix">email</i>
-              <label for="password">Email </label>
-              <input type="email" class="validate" name="email" id="email" />
+              <label id="email" for="password">Email </label>
+              <input type="email" class="validate" name="email"/>
             </div>
             <div class="input-field col s12">
               <i class="material-icons prefix">lock</i>
-              <label for="password">Password </label>
-              <input type="password" class="validate" name="password" id="password" />
+              <label id="password" for="password">Password </label>
+              <input type="password" class="validate" name="password"/>
             </div>
           </div>
         </div>
@@ -65,25 +78,33 @@
   </div>
 
 <!-- CONTACT CONTAINER -->
-  <div class="row" hidden>
+  <div class="row " hidden>
     <div class="col m4 s1">
     </div>
-    <div id="contact-box" class="col card hoverable m4 s10" hidden>
+    <div id="contact-box" class="col card hoverable s12 m6 pull-m1 l4 animated rotateInDownLeft" hidden>
       <div class="card-content">
         <span id="contact-title" class="card-title center">Contact</span>
-        <i class="fas fa-user"></i>
-        <span id="contact-name" class="center">Torrey Smith</span><br><br>
-        <i class="fas fa-envelope"></i>
-        <a id="contact-email" class="center" href="mailto:torreypsmith@gmail.com">torreypsmith@gmail.com</a><br><br>
-        <i class="fab fa-github"></i>
-        <a id="contact-github" class="center" href="https://github.com/TheRealTorreySmith">https://github.com/TheRealTorreySmith</a><br><br>
-        <i class="fab fa-linkedin"></i>
-        <a id="contact-linkedin" class="center" href="https://www.linkedin.com/in/therealtorreysmith/">https://www.linkedin.com/in/therealtorreysmith/</a><br><br>
+        <div class="center">
+          <i class="fas fa-user"></i>
+          <span id="contact-name" class="center">Torrey Smith</span><br><br>
+        </div>
+        <div class="center">
+          <i class="fas fa-envelope"></i>
+          <a id="contact-email" class="center bounce-i" href="mailto:torreypsmith@gmail.com">torreypsmith@gmail.com</a><br><br>
+        </div>
+        <div class="center">
+          <i class="fab fa-github"></i>
+          <a id="contact-github" class="center bounce-i" href="https://github.com/TheRealTorreySmith">https://github.com/TheRealTorreySmith</a><br><br>
+        </div>
+        <div class="center">
+          <i class="fab fa-linkedin"></i>
+          <a id="contact-linkedin" class="center bounce-i" href="https://www.linkedin.com/in/therealtorreysmith/">https://www.linkedin.com/in/therealtorreysmith/</a><br><br>
+        </div>
           <form class="col s12">
             <div class="row">
               <div class="input-field col s12">
-                <textarea id="textarea1" class="materialize-textarea"></textarea>
-                <label for="textarea1">Comments</label>
+                <textarea class="materialize-textarea"></textarea>
+                <label id="textarea1" for="textarea1">Comments</label>
               </div>
             </div>
           </form>
@@ -94,11 +115,28 @@
       </div>
     </div>
 
+  <!-- SUBMITTED COMMENTS CONTAINER -->
+  <div id="submitted-comment" class="valign-wrapper row" hidden>
+    <div class="col l3 m4 s1">
+    </div>
+    <div class="col card hoverable s10 m6 pull-m1 l5 animated zoomIn">
+      <div id="comment-alert" class="card-content row">
+        <div class="col l2 m2 s2">
+          <i id="check" class="material-icons large">check</i>
+        </div>
+        <div class="col l10 m10 s10">
+          <span class="card-title center">Thank you for submitting your comment!</span>
+          <span id="reply" class="card-title center">We will be in contact with you shortly.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- SEARCH MAPS CONTAINER -->
-  <div id="search-box" class="row" hidden>
+  <div id="search-box" class="valign-wrapper row" hidden>
     <div class="col m4 s1">
     </div>
-    <div class="col card hoverable m4 s10">
+    <div class="col card hoverable s10 m6 pull-m1 l4 animated rotateInDownRight">
       <div class="card-content">
         <span id="search-maps-title" class="card-title center"></span>
         <div class="row">
