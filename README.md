@@ -26,6 +26,8 @@ or
 
 Download and unzip the files.
 
+<img width="427" alt="screen shot 2018-03-08 at 4 14 59 pm" src="https://user-images.githubusercontent.com/23587348/37181863-f197f5e2-22eb-11e8-8ea3-f59e2e9639a5.png">
+
 ## Usage
 
 - Open the index.html file in your default browser
@@ -37,7 +39,7 @@ Download and unzip the files.
 
 <img width="352" alt="screen shot 2018-03-08 at 4 08 30 pm" src="https://user-images.githubusercontent.com/23587348/37181645-184043ee-22eb-11e8-8798-8a535442f71e.png">
 
-- Submit comments through the "contact" form
+- Submit comments through the "Contact" form
 
 <img width="354" alt="screen shot 2018-03-08 at 4 11 59 pm" src="https://user-images.githubusercontent.com/23587348/37181742-81e794dc-22eb-11e8-88cc-8e4847a21dac.png">
 
