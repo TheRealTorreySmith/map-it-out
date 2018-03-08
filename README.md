@@ -1,6 +1,6 @@
 # Map-It-Out
 
-A template of Map-It-Out to quickly have access to the map web application.
+A web application that can be used to search multiple maps with one keyword search term.
 
 ## Table of Contents
 
