@@ -47,7 +47,7 @@ function loginSubmit() {
 }
 
 $(document).ready(function () {
-
+  //HIDES THE MOBILE MENU FOR LARGER SCREEN-WIDTHS
   hideMobileBtn();
 
   //GETS THE USERS CURRENT LOCATION IN LONGITUDE AND LATITUDE
@@ -84,32 +84,38 @@ $(document).ready(function () {
 
   //TAKES THE SEARCH VALUE AND PUTS THE IFRAMES ON THE PAGE
   $('#search-terms').on("click", function() {
-    $('#search-box').hide();
-    const searchValue = $('#search-value').val();
-    const coords = localStorage.getItem('Coordinates');
-    for (let i = 1; i <= number; i++) {
-      const iframe = $('<iframe src="" width="430" height="430" allowfullscreen/>').attr("id", [i]).appendTo($('body'));
-    }
+    if ($('#search-value').val() === "") {
+      alert("Please choose a keyword to search!")
+    } else if (number === 0){
+      alert("Please choose one or more maps to search!")
+    } else {
+      $('#search-box').hide();
+      const searchValue = $('#search-value').val();
+      const coords = localStorage.getItem('Coordinates');
+      for (let i = 1; i <= number; i++) {
+        const iframe = $('<iframe src="" width="430" height="430" allowfullscreen/>').attr("id", [i]).appendTo($('body'));
+      }
 
-    //GEOCODE API THAT RETURNS LONGITUTDE AND LATITUDE
-    const xhr = $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU`);
-    xhr.done(function(Data){
-      var lat = Data.results[0].geometry.location.lat;
-      var long = Data.results[0].geometry.location.lng;
-      const destCoords = lat + "," + long;
+      //GEOCODE API THAT RETURNS LONGITUTDE AND LATITUDE
+      const xhr = $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU`);
+      xhr.done(function(Data){
+        var lat = Data.results[0].geometry.location.lat;
+        var long = Data.results[0].geometry.location.lng;
+        const destCoords = lat + "," + long;
 
-      //CURRENT LOCATION PANORAMIC
-      $('#1').attr("src", `https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&location=${coords}&heading=210&pitch=10&fov=35`);
-      //CURRENT LOCATION SATELLITE
-      $('#2').attr("src", `https://www.google.com/maps/embed/v1/view?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&center=${coords}&zoom=18&maptype=satellite`);
-      //CURRENT LOCATION OVERVIEW
-      $('#3').attr("src", `https://www.google.com/maps/embed/v1/search?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&q=Boulder`);
-      //DESTINATION PANORAMIC
-      $('#4').attr("src", `https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&location=${destCoords}&heading=210&pitch=10&fov=35`);
-      //DESTINATION SATELLITE
-      $('#5').attr("src", `https://www.google.com/maps/embed/v1/view?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&center=${destCoords}&zoom=18&maptype=satellite`);
-      //DESTINATION LOCATION OVERVIEW
-      $('#6').attr("src", `https://www.google.com/maps/embed/v1/search?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&q=${searchValue}`);
-      });
+        //CURRENT LOCATION PANORAMIC
+        $('#1').attr("src", `https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&location=${coords}&heading=210&pitch=10&fov=35`);
+        //CURRENT LOCATION SATELLITE
+        $('#2').attr("src", `https://www.google.com/maps/embed/v1/view?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&center=${coords}&zoom=18&maptype=satellite`);
+        //CURRENT LOCATION OVERVIEW
+        $('#3').attr("src", `https://www.google.com/maps/embed/v1/search?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&q=Boulder`);
+        //DESTINATION PANORAMIC
+        $('#4').attr("src", `https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&location=${destCoords}&heading=210&pitch=10&fov=35`);
+        //DESTINATION SATELLITE
+        $('#5').attr("src", `https://www.google.com/maps/embed/v1/view?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&center=${destCoords}&zoom=18&maptype=satellite`);
+        //DESTINATION LOCATION OVERVIEW
+        $('#6').attr("src", `https://www.google.com/maps/embed/v1/search?key=AIzaSyAdIFq65Zr53hb-rranIX2NzTW-ZeKv_rU&q=${searchValue}`);
+        });
+      }
     });
-});
+  });
